@@ -57,11 +57,7 @@ const build = (imageName, buildArgs) => {
 
   core.info(`Building Docker image: ${imageName}`);
 
-  try {
-    cp.execSync(createBuildCommand(dockerfile, imageName, buildArgs));
-  } catch (ex) {
-    core.error(ex);
-  }
+  cp.execSync(createBuildCommand(dockerfile, imageName, buildArgs), { stdio: [process.stderr] });
 };
 
 const isEcr = registry => registry && registry.includes('amazonaws');
