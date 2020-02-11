@@ -57,7 +57,12 @@ const build = (imageName, buildArgs) => {
   }
 
   core.info(`Building Docker image: ${imageName}`);
-  cp.execSync(createBuildCommand(dockerfile, imageName, buildArgs), { maxBuffer: maxBufferSize });
+
+  try {
+    cp.execSync(createBuildCommand(dockerfile, imageName, buildArgs), { maxBuffer: maxBufferSize });
+  } catch (ex) {
+    core.error(ex);
+  }
 };
 
 const isEcr = registry => registry && registry.includes('amazonaws');
